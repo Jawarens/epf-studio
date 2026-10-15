@@ -1,0 +1,13 @@
+# Operating System
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# IDE & Scratch
+.idea/
+.vscode/
+*.tmp
+*.log
+scratch/

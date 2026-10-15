@@ -1,0 +1,471 @@
+{
+  "system_name": "Swedavia Emergency Vehicle Power Distribution & Lighting System",
+  "hardware": "Addio DRB9012-8 ADV / Awimex SCR-9012 (12V 90A Digital Relay Units)",
+  "protocol": "Addio CAN-Bus (Dual RJ10 Bus Topology, Master/Slave)",
+  "nodes": [
+    {
+      "id": 91,
+      "role": "Master (Role 0)",
+      "unit_id": "Swedavia CustomBlåljus",
+      "epf_file": "Swedavia_CustomBlåljus__AW1124500278.epf",
+      "description": "Primary vehicle controller, Master CAN broadcast generator, Hand Controller hub, roof & perimeter warning lights",
+      "firmware": "4.6.1v DRB9012-8 ADV",
+      "date": "2026-06-26 15:22",
+      "outputs": [
+        {
+          "pin": "U1",
+          "name": "Tak blaljus",
+          "fuse": "6A",
+          "type": "Roof Blue Light Bar",
+          "trigger": "VU1 (In17) with Pulse Timer 2",
+          "desc": "Main roof-mounted emergency blue light beacon/bar"
+        },
+        {
+          "pin": "U2",
+          "name": "Riktat blalju",
+          "fuse": "4A",
+          "type": "Directional Blue Strobe",
+          "trigger": "VU2 (In18)",
+          "desc": "Front grille / directional forward blue strobe lights"
+        },
+        {
+          "pin": "U3",
+          "name": "Tak blixt",
+          "fuse": "6A",
+          "type": "Roof Amber Strobe",
+          "trigger": "VU9 (In25)",
+          "desc": "Main roof amber/yellow warning strobe"
+        },
+        {
+          "pin": "U4",
+          "name": "Riktat blixt",
+          "fuse": "4A",
+          "type": "Directional Amber Strobe",
+          "trigger": "VU10 (In26) with Timer 2",
+          "desc": "Front/rear directional amber flashers"
+        },
+        {
+          "pin": "U5",
+          "name": "ICAO RiktatB",
+          "fuse": "6A",
+          "type": "ICAO Directional Blue",
+          "trigger": "VU2 (In18) & VU1 (In17) [Fn 11 Flasher]",
+          "desc": "ICAO airport certified flash pattern for directional blue lights"
+        },
+        {
+          "pin": "U6",
+          "name": "ICAO riktat",
+          "fuse": "4A",
+          "type": "ICAO Directional Amber",
+          "trigger": "VU10 (In26) & VU9 (In25) [Fn 11 Flasher]",
+          "desc": "ICAO airport certified flash pattern for directional amber lights"
+        },
+        {
+          "pin": "U7",
+          "name": "ICAO tak",
+          "fuse": "6A",
+          "type": "ICAO Roof Warning",
+          "trigger": "VU16 (In32), VU1 (In17), VU9 (In25) [Fn 11 Flasher]",
+          "desc": "ICAO compliant high-intensity roof warning light pattern"
+        },
+        {
+          "pin": "U8",
+          "name": "Nattsankning",
+          "fuse": "6A",
+          "type": "Night Dimming Bus",
+          "trigger": "In1 (Physical Input 1 - Vehicle Night/Parking Light)",
+          "desc": "Triggers low-intensity night operation mode to prevent pilot/driver glare"
+        }
+      ],
+      "motor_outputs": [
+        {
+          "name": "MOTOR_CONTROL_1",
+          "fuse": "6A",
+          "control": "VU16 (In32), VU1 (In17), HC_BTN 11",
+          "desc": "Integrated H-Bridge DC motor 1 (e.g., lightbar lifter/actuator)"
+        },
+        {
+          "name": "MOTOR_CONTROL_2",
+          "fuse": "6A",
+          "control": "In1, HC_BTN 12",
+          "desc": "Integrated H-Bridge DC motor 2"
+        }
+      ]
+    },
+    {
+      "id": 92,
+      "role": "Slave S (Role 1)",
+      "unit_id": "Swedavia CustomBlaljus S",
+      "epf_file": "Swedavia_CustomBlaljus_S_AW1124500289.epf",
+      "description": "Secondary peripheral unit: airport transponder, perimeter work lighting, sill illumination, high-beam flasher, and safety systems",
+      "firmware": "4.6.1v DRB9012-8 ADV",
+      "date": "2026-06-26 17:17",
+      "outputs": [
+        {
+          "pin": "U1",
+          "name": "Transponder",
+          "fuse": "6A",
+          "type": "Airport Vehicle Tracking",
+          "trigger": "VU15 (In31) & HC_BTN 1",
+          "desc": "Power to airport ground vehicle radar/ADS-B transponder & locator"
+        },
+        {
+          "pin": "U2",
+          "name": "Helljus",
+          "fuse": "1A",
+          "type": "High Beam Wig-Wag",
+          "trigger": "VU8 (In24) [Fn 11] + CAN Slot 31 (SP1_B7)",
+          "desc": "High beam headlight flasher relay control for emergency warning"
+        },
+        {
+          "pin": "U3",
+          "name": "Arb bak",
+          "fuse": "3A",
+          "type": "Rear Work Light",
+          "trigger": "CAN Slot 32 (SP1_B8) / HC_BTN 4 / VU16 & VU2",
+          "desc": "Rear flood/work area illumination"
+        },
+        {
+          "pin": "U4",
+          "name": "Arb v",
+          "fuse": "2A",
+          "type": "Left Work Light",
+          "trigger": "HC_BTN 5 / VU9 (In25) & VU2 (In18)",
+          "desc": "Left side scene/alley work light"
+        },
+        {
+          "pin": "U5",
+          "name": "Arb h",
+          "fuse": "2A",
+          "type": "Right Work Light",
+          "trigger": "HC_BTN 6 / VU14 (In30) & VU2 (In18)",
+          "desc": "Right side scene/alley work light"
+        },
+        {
+          "pin": "U6",
+          "name": "Troskel v",
+          "fuse": "1A",
+          "type": "Left Step Light",
+          "trigger": "CAN Slot 33 (SP2_B1) & VU2 (In18)",
+          "desc": "Vehicle left entrance door sill / threshold step light"
+        },
+        {
+          "pin": "U7",
+          "name": "Troskel h",
+          "fuse": "1A",
+          "type": "Right Step Light",
+          "trigger": "CAN Slot 34 (SP2_B4) & VU2 (In18)",
+          "desc": "Vehicle right entrance door sill / threshold step light"
+        },
+        {
+          "pin": "U8",
+          "name": "Aktiv Heps",
+          "fuse": "1A",
+          "type": "Emergency Safety/HEPS",
+          "trigger": "VU6 (In22) [Fn 11] & VU3 (In19)",
+          "desc": "Active emergency exit / helicopter emergency power / hazard system"
+        }
+      ]
+    },
+    {
+      "id": 93,
+      "role": "Slave Box 3 (Role 1)",
+      "unit_id": "Swedavia Blaljus Box 3",
+      "epf_file": "Swedavia_Blaljus_Box_3_AW1321410147.epf",
+      "description": "Runway dual-mode lighting module: decodes Master commands into ICAO apron mode vs. runway/landing mode for blue and amber flashers",
+      "firmware": "4.6.1v DRB9012-8 ADV",
+      "date": "2026-06-26 17:20",
+      "outputs": [
+        {
+          "pin": "U1",
+          "name": "BL ICAO",
+          "fuse": "6A",
+          "type": "Blue Light ICAO Mode",
+          "trigger": "CAN Slot 17 (VU14) & CAN Slot 10 (SP3_B5)",
+          "desc": "Blue lights operating under international ICAO aerodrome pattern"
+        },
+        {
+          "pin": "U2",
+          "name": "BL Land",
+          "fuse": "4A",
+          "type": "Blue Light Landing Mode",
+          "trigger": "CAN Slot 18 (VU15) & CAN Slot 11 (SP3_B6)",
+          "desc": "Blue lights operating under national/runway landing mode"
+        },
+        {
+          "pin": "U3",
+          "name": "Gul ICAO",
+          "fuse": "6A",
+          "type": "Amber Light ICAO Mode",
+          "trigger": "CAN Slot 19 (VU16) & CAN Slot 16 (VU13)",
+          "desc": "Amber warning lights operating under ICAO airport pattern"
+        },
+        {
+          "pin": "U4",
+          "name": "Gul Land",
+          "fuse": "4A",
+          "type": "Amber Light Landing Mode",
+          "trigger": "CAN Slot 20 (HC_BTN 1) & CAN Slot 12 (SP1_B4)",
+          "desc": "Amber warning lights operating under runway/landing mode"
+        },
+        {
+          "pin": "U5",
+          "name": "U5",
+          "fuse": "6A",
+          "type": "Auxiliary Output 5",
+          "trigger": "Local Physical Input In5",
+          "desc": "Directly triggered auxiliary output"
+        },
+        {
+          "pin": "U6",
+          "name": "U6",
+          "fuse": "4A",
+          "type": "Auxiliary Output 6",
+          "trigger": "Local Physical Input In6",
+          "desc": "Directly triggered auxiliary output"
+        },
+        {
+          "pin": "U7",
+          "name": "U7",
+          "fuse": "6A",
+          "type": "Auxiliary Output 7",
+          "trigger": "Local Physical Input In7",
+          "desc": "Directly triggered auxiliary output"
+        },
+        {
+          "pin": "U8",
+          "name": "U8",
+          "fuse": "6A",
+          "type": "Auxiliary Output 8",
+          "trigger": "Local Physical Input In8",
+          "desc": "Directly triggered auxiliary output"
+        }
+      ]
+    }
+  ],
+  "can_broadcast_bank": [
+    {
+      "slot": 0,
+      "src_id": 1,
+      "source": "Master In1 (Physical Input 1)",
+      "usage": "Vehicle Ignition / Night dimming input signal to Slave units"
+    },
+    {
+      "slot": 1,
+      "src_id": 2,
+      "source": "Master In2 (Physical Input 2)",
+      "usage": "Mirrored to Slave S VU10"
+    },
+    {
+      "slot": 2,
+      "src_id": 3,
+      "source": "Master In3 (Physical Input 3)",
+      "usage": "Mirrored to Slave S VU11"
+    },
+    {
+      "slot": 3,
+      "src_id": 4,
+      "source": "Master In4 (Physical Input 4)",
+      "usage": "Mirrored to Slave S VU12"
+    },
+    {
+      "slot": 4,
+      "src_id": 5,
+      "source": "Master In5 (Physical Input 5)",
+      "usage": "Mirrored to Slave S VU13"
+    },
+    {
+      "slot": 7,
+      "src_id": 17,
+      "source": "Master VU1 (Roof Blue Light Status)",
+      "usage": "Synchronizes blue light state across CAN bus"
+    },
+    {
+      "slot": 8,
+      "src_id": 62,
+      "source": "Switch Panel 2, Button 6 (SP2_B6)",
+      "usage": "Transmitted to Slave S (triggers VU2 / VU3)"
+    },
+    {
+      "slot": 9,
+      "src_id": 67,
+      "source": "Switch Panel 3, Button 3 (SP3_B3)",
+      "usage": "Special lighting mode switch"
+    },
+    {
+      "slot": 10,
+      "src_id": 69,
+      "source": "Switch Panel 3, Button 5 (SP3_B5)",
+      "usage": "Controls Box 3 Output U1 (BL ICAO) & Master VU logic"
+    },
+    {
+      "slot": 11,
+      "src_id": 70,
+      "source": "Switch Panel 3, Button 6 (SP3_B6)",
+      "usage": "Controls Box 3 Output U2 (BL Land) & Master VU logic"
+    },
+    {
+      "slot": 12,
+      "src_id": 52,
+      "source": "Switch Panel 1, Button 4 (SP1_B4)",
+      "usage": "Controls Box 3 Output U4 (Gul Land)"
+    },
+    {
+      "slot": 13,
+      "src_id": 58,
+      "source": "Switch Panel 2, Button 2 (SP2_B2)",
+      "usage": "Transmitted to Slave S (triggers VU4)"
+    },
+    {
+      "slot": 14,
+      "src_id": 59,
+      "source": "Switch Panel 2, Button 3 (SP2_B3)",
+      "usage": "Transmitted to Slave S (triggers VU5)"
+    },
+    {
+      "slot": 15,
+      "src_id": 61,
+      "source": "Switch Panel 2, Button 5 (SP2_B5)",
+      "usage": "Transmitted to Slave S (triggers VU8)"
+    },
+    {
+      "slot": 16,
+      "src_id": 29,
+      "source": "Master VU13 (Amber Master Logic)",
+      "usage": "Controls Box 3 Output U3 (Gul ICAO)"
+    },
+    {
+      "slot": 17,
+      "src_id": 30,
+      "source": "Master VU14 (Amber Secondary Logic)",
+      "usage": "Controls Box 3 Output U1 (BL ICAO) In1"
+    },
+    {
+      "slot": 18,
+      "src_id": 31,
+      "source": "Master VU15 (Warning Pattern Logic)",
+      "usage": "Controls Box 3 Output U2 (BL Land) In1"
+    },
+    {
+      "slot": 19,
+      "src_id": 32,
+      "source": "Master VU16 (Dual Flash Logic)",
+      "usage": "Controls Box 3 Output U3 (Gul ICAO) In1"
+    },
+    {
+      "slot": 20,
+      "src_id": 33,
+      "source": "Hand Controller Button 1 (HC_BTN 1)",
+      "usage": "Controls Box 3 Output U4 (Gul Land) In1"
+    },
+    {
+      "slot": 29,
+      "src_id": 53,
+      "source": "Switch Panel 1, Button 5 (SP1_B5)",
+      "usage": "Master & Slave S synchronization"
+    },
+    {
+      "slot": 30,
+      "src_id": 54,
+      "source": "Switch Panel 1, Button 6 (SP1_B6)",
+      "usage": "Controls Slave S VU4 logic"
+    },
+    {
+      "slot": 31,
+      "src_id": 55,
+      "source": "Switch Panel 1, Button 7 (SP1_B7)",
+      "usage": "Triggers Slave S Output U2 (Helljus Wig-Wag)"
+    },
+    {
+      "slot": 32,
+      "src_id": 56,
+      "source": "Switch Panel 1, Button 8 (SP1_B8)",
+      "usage": "Triggers Slave S Output U3 (Arb bak - Rear Work Light)"
+    },
+    {
+      "slot": 33,
+      "src_id": 57,
+      "source": "Switch Panel 2, Button 1 (SP2_B1)",
+      "usage": "Triggers Slave S Output U6 (Troskel v - Left Step Light)"
+    },
+    {
+      "slot": 34,
+      "src_id": 60,
+      "source": "Switch Panel 2, Button 4 (SP2_B4)",
+      "usage": "Triggers Slave S Output U7 (Troskel h - Right Step Light)"
+    }
+  ],
+  "hand_controller": {
+    "master_buttons": [
+      {
+        "btn": "B1",
+        "func": "Latch (1)",
+        "bl_func": "VU1 (Tak blaljus status)",
+        "color": "Blue",
+        "desc": "Toggle Roof Blue Lightbar"
+      },
+      {
+        "btn": "B2",
+        "func": "Momentary (2)",
+        "bl_func": "VU2 (Riktat blaljus status)",
+        "color": "Blue",
+        "desc": "Directional Front Blue Lights"
+      },
+      {
+        "btn": "B3",
+        "func": "Latch (1)",
+        "bl_func": "VU9 (Tak blixt status)",
+        "color": "Amber",
+        "desc": "Toggle Roof Amber Warning Strobe"
+      },
+      {
+        "btn": "B4",
+        "func": "Momentary (2)",
+        "bl_func": "VU10 (Riktat blixt status)",
+        "color": "Amber",
+        "desc": "Directional Amber Strobes"
+      },
+      {
+        "btn": "B14",
+        "func": "Latch (1)",
+        "bl_func": "-",
+        "color": "White",
+        "desc": "Auxiliary Function 14"
+      },
+      {
+        "btn": "B15",
+        "func": "Latch (1)",
+        "bl_func": "-",
+        "color": "Amber",
+        "desc": "System Master / Hazard Mode"
+      }
+    ],
+    "slave_s_buttons": [
+      {
+        "btn": "B1",
+        "func": "Direct",
+        "desc": "Transponder Activate"
+      },
+      {
+        "btn": "B4",
+        "func": "Direct",
+        "desc": "Rear Work Light (Arb bak)"
+      },
+      {
+        "btn": "B5",
+        "func": "Direct",
+        "desc": "Left Work Light (Arb v)"
+      },
+      {
+        "btn": "B6",
+        "func": "Direct",
+        "desc": "Right Work Light (Arb h)"
+      },
+      {
+        "btn": "B7",
+        "func": "Latch",
+        "desc": "Secondary Strobe / Scene Function"
+      }
+    ]
+  }
+}
