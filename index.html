@@ -1741,7 +1741,7 @@
     <button class="tool-btn btn-upload" onclick="document.getElementById('epf-file-input').click()" title="Öppna EPF-profil(er)" style="background: rgba(16, 185, 129, 0.25); border-color: #10b981; color: #34d399; font-weight: 700;">
       <span>📂</span> <span id="lbl-btn-load">Öppna EPF</span>
     </button>
-    <button class="tool-btn" id="btn-reset-demo" onclick="resetToSwedaviaDemo()" title="Återställ till Swedavia Demo" style="background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #fbbf24; font-size: 11px;">
+    <button class="tool-btn" id="btn-reset-demo" onclick="resetToDemoProfile()" title="Återställ till demoprofil" style="background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; color: #fbbf24; font-size: 11px;">
       <span>↺ Demo</span>
     </button>
     <button class="tool-btn lang-btn" onclick="toggleLanguage()" id="lang-btn" title="Byt språk">EN</button>
@@ -1853,17 +1853,17 @@
       </div>
       <label class="track-item">
         <input type="checkbox" id="chk-grp-node91" checked onchange="updateTrackingFilter('node91', this.checked)">
-        <span>Node 91: Master (CustomBlåljus)</span>
+        <span>Node 91: Master (DRB9012-8)</span>
         <span class="badge-pill" style="background:rgba(0,180,255,0.2); color:#38bdf8;">U1-U8</span>
       </label>
       <label class="track-item">
         <input type="checkbox" id="chk-grp-node92" checked onchange="updateTrackingFilter('node92', this.checked)">
-        <span>Node 92: Slave S (Work/HEPS)</span>
+        <span>Node 92: Slave S (Arbetsljus/HEPS)</span>
         <span class="badge-pill" style="background:rgba(255,157,0,0.2); color:#fbbf24;">U1-U8</span>
       </label>
       <label class="track-item">
         <input type="checkbox" id="chk-grp-node93" checked onchange="updateTrackingFilter('node93', this.checked)">
-        <span>Node 93: Slave Box 3 (Runway)</span>
+        <span>Node 93: Slave Box 3 (Varningsljus)</span>
         <span class="badge-pill" style="background:rgba(192,132,252,0.2); color:#c084fc;">U1-U4</span>
       </label>
     </div>
@@ -2070,7 +2070,7 @@ const trackingFilters = {
 // HARDWARE ARCHITECTURE & LOGIC NODES
 // =========================================================================
 // =========================================================================
-// OPTIONAL DEMONSTRATION DATA (Swedavia 3-Node Airport Fleet Setup)
+// OPTIONAL DEMONSTRATION DATA (Standard 3-Node Vehicle Fleet Profile)
 // Loaded on-demand when clicking "↺ Demo"
 // =========================================================================
 const SWEDAVIA_DEMO_DATA = {
@@ -2420,8 +2420,8 @@ const SWEDAVIA_DEMO_DATA = {
   // --- NODE 92 SLAVE S OUTPUTS (group: 'node92') ---
   { id: 'S92_U1', col: 'col-outputs', filterGroup: 'node92', w: 290, h: 100, type: 'out', theme: 'purple', pin: 'S U1', rightBadge: '6A SÄKRING', badgeClass: 'badge-right',
     title_sv: 'Transponder ADS-B', title_en: 'ADS-B Radar Transponder',
-    sub_sv: 'Markradarföljning: HK 1 + VU15', sub_en: 'Airport Ground Tracking Radar',
-    rule: 'S92 U1 = HK Knapp 1 + VU15 • Säkring 6A • Konstant matning till flygplatsradar' },
+    sub_sv: 'Telemetri / Fordonsspårning: HK 1 + VU15', sub_en: 'Vehicle Telemetry & Position Tracking',
+    rule: 'S92 U1 = HK Knapp 1 + VU15 • Säkring 6A • Konstant matning till fordonsradar/telemetri' },
 
   { id: 'S92_U2', col: 'col-outputs', filterGroup: 'node92', w: 290, h: 100, type: 'out', theme: 'cyan', pin: 'S U2', rightBadge: '1A SÄKRING', badgeClass: 'badge-right',
     title_sv: 'Helljus Wig-Wag', title_en: 'High-Beam Headlight Flasher',
@@ -2494,12 +2494,12 @@ const SWEDAVIA_DEMO_DATA = {
 
   { id: 'LOAD_ROOF_AMB', col: 'col-loads', filterGroup: 'loads', w: 290, h: 100, type: 'load', theme: 'amber', pin: 'LAST', rightBadge: 'BELASTNING', badgeClass: 'badge-right',
     title_sv: 'Tak Varningsblixt Gul', title_en: 'Roof Amber Strobes',
-    sub_sv: '360° gult flygplatsvarningsljus', sub_en: '360° Apron Hazard Strobe',
+    sub_sv: '360° gult varningsblixtljus', sub_en: '360° Hazard Strobe',
     rule: 'Matas med 12V 6A via Master U3, U4 och U6' },
 
   { id: 'LOAD_TRANSP', col: 'col-loads', filterGroup: 'loads', w: 290, h: 100, type: 'load', theme: 'purple', pin: 'LAST', rightBadge: 'RADAR', badgeClass: 'badge-right',
-    title_sv: 'Flygplatsradar ADS-B Transponder', title_en: 'ADS-B Radar Transponder',
-    sub_sv: 'Fordonspositionering för flygledartorn', sub_en: 'Air Traffic Control Location',
+    title_sv: 'Fordonsradar / ADS-B Transponder', title_en: 'Vehicle Radar / ADS-B Transponder',
+    sub_sv: 'Fordonspositionering och telemetri', sub_en: 'Vehicle Telemetry & Position Tracking',
     rule: 'Spänningsmatas med 12V 6A via Slav S U1' },
 
   { id: 'LOAD_WIGWAG', col: 'col-loads', filterGroup: 'loads', w: 290, h: 100, type: 'load', theme: 'cyan', pin: 'LAST', rightBadge: 'RELÄ', badgeClass: 'badge-right',
@@ -2700,8 +2700,8 @@ const SWEDAVIA_DEMO_DATA = {
   ],
   decodedProfiles: [
   {
-    fileName: 'Swedavia_CustomBlåljus__AW1124500278.epf',
-    unitId: 'Swedavia CustomBlåljus',
+    fileName: 'Addio_Master_AW1124500278.epf',
+    unitId: 'Master Nod 91',
     nodeId: '91',
     role: 'Roll 0 (Master)',
     date: '2026-06-26 15:22',
@@ -2721,8 +2721,8 @@ const SWEDAVIA_DEMO_DATA = {
     summary_en: 'Primary master unit. Generates 35-slot CAN Signalbank and Hand Controller 15 hub.'
   },
   {
-    fileName: 'Swedavia_CustomBlaljus_S_AW1124500289.epf',
-    unitId: 'Swedavia CustomBlaljus S',
+    fileName: 'Addio_Slave_S_AW1124500289.epf',
+    unitId: 'Slav S Nod 92',
     nodeId: '92',
     role: 'Roll 1 (Slav S)',
     date: '2026-06-26 17:17',
@@ -2742,8 +2742,8 @@ const SWEDAVIA_DEMO_DATA = {
     summary_en: 'Peripheral unit for work lights, alley spots, ADS-B transponder, and HEPS.'
   },
   {
-    fileName: 'Swedavia_Blaljus_Box_3_AW1321410147.epf',
-    unitId: 'Swedavia Blaljus Box 3',
+    fileName: 'Addio_Slave_Box3_AW1321410147.epf',
+    unitId: 'Slav Box 3 Nod 93',
     nodeId: '93',
     role: 'Roll 1 (Slav Box 3)',
     date: '2026-06-26 17:20',
@@ -2763,8 +2763,8 @@ const SWEDAVIA_DEMO_DATA = {
     summary_en: 'Slave unit dedicated to ICAO airport runway and apron beacons.'
   },
   {
-    fileName: 'Swedavia_CustomBlålj_AW1124500278.epf',
-    unitId: 'Swedavia CustomBlålj',
+    fileName: 'Addio_Master_Alt_AW1124500278.epf',
+    unitId: 'Master Nod 91 (Alt)',
     nodeId: '91',
     role: 'Roll 0 (Master Alt)',
     date: '2026-06-26 17:21',
@@ -3128,9 +3128,9 @@ function getModuleName(modKey) {
     return currentLang === 'sv' ? `Nod ${meta.nodeId}: ${meta.unitName}` : `Node ${meta.nodeId}: ${meta.unitName}`;
   }
   const names = {
-    node91: currentLang === 'sv' ? "Nod 91: Master (CustomBlåljus)" : "Node 91: Master (CustomBlåljus)",
+    node91: currentLang === 'sv' ? "Nod 91: Master (DRB9012-8)" : "Node 91: Master (DRB9012-8)",
     node92: currentLang === 'sv' ? "Nod 92: Slav S (Arbetsljus/HEPS)" : "Node 92: Slave S (Work/HEPS)",
-    node93: currentLang === 'sv' ? "Nod 93: Slav Box 3 (Rullbana)" : "Node 93: Slave Box 3 (Runway)"
+    node93: currentLang === 'sv' ? "Nod 93: Slav Box 3 (Varningsljus)" : "Node 93: Slave Box 3 (Warning)"
   };
   return names[modKey] || modKey.toUpperCase();
 }
@@ -3169,7 +3169,7 @@ function renderLayout() {
           <span>📂</span>
           <span>${currentLang === 'sv' ? 'Öppna EPF-filer' : 'Open EPF Files'}</span>
         </button>
-        <button class="empty-btn-secondary" onclick="resetToSwedaviaDemo()">
+        <button class="empty-btn-secondary" onclick="resetToDemoProfile()">
           <span>↺</span>
           <span>${currentLang === 'sv' ? 'Ladda Demoprofil' : 'Load Demo Profile'}</span>
         </button>
@@ -3663,10 +3663,10 @@ const SIM_CIRCUITS = {
   transp: {
     id: 'transp',
     icon: '📡',
-    title_sv: 'Flygplatsradar ADS-B & Säkerhetskrets',
-    title_en: 'Airport Ground Tracking Radar & Safety Bus',
-    desc_sv: 'Säkerhets- och positioneringskrets: HK Knapp 15 (Huvudströmbrytare) aktiverar Slav S U1 för direkt ADS-B markradarmatning. Master VU1 status överförs via Slot 8 till Slav S U8 för Aktiv HEPS nödsystem.',
-    desc_en: 'Safety and tracking circuit: HK Button 15 (Master Power) powers Slave S U1 for continuous ADS-B ground radar. Master VU1 status transmits via Slot 8 to Slave S U8 for Active HEPS emergency safety.',
+    title_sv: 'Fordonsradar ADS-B & Säkerhetskrets',
+    title_en: 'Vehicle Radar ADS-B & Safety Bus',
+    desc_sv: 'Säkerhets- och positioneringskrets: HK Knapp 15 (Huvudströmbrytare) aktiverar Slav S U1 för direkt ADS-B/radar spänningsmatning. Master VU1 status överförs via Slot 8 till Slav S U8 för Aktiv HEPS nödsystem.',
+    desc_en: 'Safety and tracking circuit: HK Button 15 (Master Power) powers Slave S U1 for continuous ADS-B radar/telemetry. Master VU1 status transmits via Slot 8 to Slave S U8 for Active HEPS emergency safety.',
     rule: 'S92_U1 = HK_B15 (6A konstant matning) • S92_U8 = Slot 8 (Master VU1 samkörning) • Aktiv HEPS övervakning',
     primaryNode: 'HC_B15',
     nodes: ['HC_B15', 'HC_B1', 'M_VU1', 'SB_SLOT8', 'S92_U1', 'S92_U8', 'LOAD_TRANSP', 'LOAD_HEPS'],
@@ -4160,7 +4160,7 @@ function handleFileInput(e) {
   e.target.value = '';
 }
 
-function backupSwedaviaDefaults() {
+function backupDefaults() {
   if (!SWEDAVIA_DEFAULT_DATA) {
     if (typeof SWEDAVIA_DEMO_DATA !== 'undefined' && SWEDAVIA_DEMO_DATA) {
       SWEDAVIA_DEFAULT_DATA = SWEDAVIA_DEMO_DATA;
@@ -4176,7 +4176,7 @@ function backupSwedaviaDefaults() {
   }
 }
 
-function resetToSwedaviaDemo() {
+function resetToDemoProfile() {
   if (!SWEDAVIA_DEFAULT_DATA && typeof SWEDAVIA_DEMO_DATA !== 'undefined') {
     SWEDAVIA_DEFAULT_DATA = SWEDAVIA_DEMO_DATA;
   }
@@ -4216,12 +4216,15 @@ function resetToSwedaviaDemo() {
 
   renderLayout();
   resetCanvas();
-  showToast(currentLang === 'sv' ? '✓ Återställd till Swedavia 3-nod demonstration' : '✓ Restored to Swedavia 3-node demo');
+  showToast(currentLang === 'sv' ? '✓ Återställd till 3-nods demoprofil' : '✓ Restored to 3-node demo profile');
 }
+
+// Backward compatibility alias
+const resetToSwedaviaDemo = resetToDemoProfile;
 
 function processEpfFiles(files) {
   if (!files || files.length === 0) return;
-  backupSwedaviaDefaults();
+  backupDefaults();
   const count = files.length;
   showToast(currentLang === 'sv' 
     ? `⏳ Läser och bygger om arkitektur för ${count} EPF-fil(er)...` 

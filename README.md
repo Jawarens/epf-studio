@@ -24,7 +24,7 @@ This project is built as a **100% self-contained single-file application**:
 1. **Universal Addio EPF XML Decoder & Runtime Visualizer**:
    - Clean, neutral startup state: drop any `.epf` or `.xml` file to automatically decode hardware modules, pinouts, and logic trees.
    - Dynamic hardware node reconstruction for Master, Slave, Switch Panels, and Input Units.
-   - Built-in on-demand demo: click **`↺ Demo`** in the top bar to test with the bundled Swedavia emergency fleet sample.
+   - Built-in on-demand demo: click **`↺ Demo`** in the top bar to test with the bundled multi-node fleet sample.
    - Live drag-and-drop file zone allowing you to load multiple profile configurations simultaneously.
 
 2. **🌲 VU Logic Port Tree (`Hotkey: V`)**:
